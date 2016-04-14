@@ -1,0 +1,7 @@
+name	telNumber	address	email	sex	title	category
+Anna Kowalska	647385993	Tychy	ania777@gmail.com	FEMALE	mgr inż.	FRIENDS
+Adam Raczewski	863882765	Al. J. Slowackiego, 36-736 Krakow	raczewskia@gmail.com	MALE	mgr	FAMILY
+Walery Krakowski	465739812	ul. Krzywa 35, Krakow	walerek1234@op.pl	MALE	dr	WORK
+Kuba Baranowicz	847264883	Tychy	baran1995@onet.pl	MALE	brak	FRIENDS
+Joanna Szel	847882883	Krakow	szeljoanna@timer.pl	FEMALE	mgr inż.	WORK
+Hania Lato	758337482	ul. Dubois 24, 64-375 Lodz	hanna@logys.org	FEMALE	dr	FAMILY	FRIENDS

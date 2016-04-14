@@ -1,10 +1,11 @@
 import javax.swing.*;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
  * Created by angelika on 05.04.16.
  */
-public class ContactList extends AbstractListModel {
+public class ContactList extends AbstractListModel implements Serializable {
 
     private ArrayList<Contact> contactList = new ArrayList<>();
 
@@ -19,7 +20,12 @@ public class ContactList extends AbstractListModel {
     }
 
     public Contact getAt(int index) {
-        return (contactList.get(index));
+        try {
+            return (contactList.get(index));
+        } catch (Exception e) {
+            //e.printStackTrace();
+        }
+        return null;
     }
 
     public void add (Contact c) {

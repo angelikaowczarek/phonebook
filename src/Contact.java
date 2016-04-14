@@ -1,12 +1,10 @@
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by angelika on 05.04.16.
  */
-public class Contact {
+public class Contact implements Serializable {
     private String name;
     private String telNumber;
     private String address;
@@ -33,6 +31,16 @@ public class Contact {
         this.sex = null;
         this.title = Title.BRAK;
         this.category = new ArrayList<>();
+    }
+
+    public String toString() {
+        String contact = name+"\t"+telNumber+"\t"+address+"\t"+email+"\t"+sex+"\t"+title;
+        for (Category c :
+                category) {
+            contact += "\t" + c.toString();
+        }
+        contact += "\n";
+        return contact;
     }
 
     public boolean categoryContains(Category c) {
