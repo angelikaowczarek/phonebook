@@ -1,3 +1,5 @@
+package phonebook;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -34,7 +36,7 @@ public class Contact implements Serializable {
     }
 
     public String toString() {
-        String contact = name+"\t"+telNumber+"\t"+address+"\t"+email+"\t"+sex+"\t"+title;
+        String contact = name + "\t" + telNumber + "\t" + address + "\t" + email + "\t" + sex + "\t" + title;
         for (Category c :
                 category) {
             contact += "\t" + c.toString();

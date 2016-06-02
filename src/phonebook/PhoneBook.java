@@ -1,3 +1,5 @@
+package phonebook;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -92,7 +94,7 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
         setContentPane(rootPanel);
         pack();
         setResizable(false);
-        setLocation(150,150);
+        setLocation(150, 150);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         createMenuBar();
@@ -170,8 +172,8 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
             fileInputStream = new FileInputStream(file);
             objectInputStream = new ObjectInputStream(fileInputStream);
             ListSelectionListener[] listSelectionListeners = filterList.getListSelectionListeners();
-            for ( ListSelectionListener listSelectionListener :
-                 listSelectionListeners) {
+            for (ListSelectionListener listSelectionListener :
+                    listSelectionListeners) {
                 filterList.removeListSelectionListener(listSelectionListener);
             }
             filterList.clearSelection();
@@ -193,10 +195,12 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
         } finally {
             try {
                 if (objectInputStream != null) objectInputStream.close();
-            } catch (IOException e) {}
+            } catch (IOException e) {
+            }
             try {
                 if (fileInputStream != null) fileInputStream.close();
-            } catch (IOException e) {}
+            } catch (IOException e) {
+            }
         }
     }
 
@@ -218,10 +222,12 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
         } finally {
             try {
                 if (objectOutputStream != null) objectOutputStream.close();
-            } catch (IOException e) {}
+            } catch (IOException e) {
+            }
             try {
                 if (fileOutputStream != null) fileOutputStream.close();
-            } catch (IOException e) {}
+            } catch (IOException e) {
+            }
         }
 
     }
@@ -250,10 +256,12 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
         } finally {
             try {
                 if (objectOutputStream != null) objectOutputStream.close();
-            } catch (IOException e) {}
+            } catch (IOException e) {
+            }
             try {
                 if (fileOutputStream != null) fileOutputStream.close();
-            } catch (IOException e) {}
+            } catch (IOException e) {
+            }
         }
 
     }
@@ -285,6 +293,7 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
             int[] selectedContactsIndices = filterList.getSelectedIndices();
             for (int contactIndex :
                     selectedContactsIndices) {
+                tempContactList.add(contactList.getAt(contactIndex));
                 bufferedWriter.write(contactList.getAt(contactIndex).toString());
             }
             bufferedWriter.close();
@@ -301,7 +310,7 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             line = bufferedReader.readLine();
-            if ( checkHeaders(line) != 1 ) {
+            if (checkHeaders(line) != 1) {
                 System.out.println("Wrong file content (headers)");
                 return;
             }
@@ -315,25 +324,26 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
                 contact.setAddress(properties[2]);
                 contact.setEmail(properties[3]);
 
-                if ( properties[4].equals(Sex.MALE.toString()) )
+                if (properties[4].equals(Sex.MALE.toString()))
                     contact.setSex(Sex.MALE);
                 else
                     contact.setSex(Sex.FEMALE);
 
-                if ( properties[5].equals("brak")) contact.setTitle(Title.BRAK);
-                if ( properties[5].equals("mgr")) contact.setTitle(Title.MGR);
-                if ( properties[5].equals("mgr inż.")) contact.setTitle(Title.MGR_INZ);
-                if ( properties[5].equals("dr")) contact.setTitle(Title.DR);
-                if ( properties[5].equals("prof")) contact.setTitle(Title.PROF);
+                contact.setTitle(Title.BRAK.getTitle(properties[5]));
+//                if ( properties[5].equals("brak")) contact.setTitle(Title.BRAK);
+//                if ( properties[5].equals("mgr")) contact.setTitle(Title.MGR);
+//                if ( properties[5].equals("mgr inż.")) contact.setTitle(Title.MGR_INZ);
+//                if ( properties[5].equals("dr")) contact.setTitle(Title.DR);
+//                if ( properties[5].equals("prof")) contact.setTitle(Title.PROF);
 
-                for (int i = 6; i < properties.length ; i++) {
-                    if( properties[i].equals("FAMILY") ) {
+                for (int i = 6; i < properties.length; i++) {
+                    if (properties[i].equals("FAMILY")) {
                         categories.add(Category.FAMILY);
                     }
-                    if( properties[i].equals("FRIENDS") ) {
+                    if (properties[i].equals("FRIENDS")) {
                         categories.add(Category.FRIENDS);
                     }
-                    if( properties[i].equals("WORK") ) {
+                    if (properties[i].equals("WORK")) {
                         categories.add(Category.WORK);
                     }
                 }
@@ -352,13 +362,13 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
 
     public int checkHeaders(String line) {
         String[] headers = line.split("\t");
-        if ( !headers[0].equals("name") )return -1;
-        else if ( !headers[1].equals("telNumber") )return -1;
-        else if ( !headers[2].equals("address") )return -1;
-        else if ( !headers[3].equals("email") )return -1;
-        else if ( !headers[4].equals("sex") )return -1;
-        else if ( !headers[5].equals("title") )return -1;
-        else if ( !headers[6].equals("category") ) return -1;
+        if (!headers[0].equals("name")) return -1;
+        else if (!headers[1].equals("telNumber")) return -1;
+        else if (!headers[2].equals("address")) return -1;
+        else if (!headers[3].equals("email")) return -1;
+        else if (!headers[4].equals("sex")) return -1;
+        else if (!headers[5].equals("title")) return -1;
+        else if (!headers[6].equals("category")) return -1;
         return 1;
     }
 
@@ -372,19 +382,19 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
 
         emailField.addFocusListener(new FocusListener() {
             @Override
-            public void focusGained(FocusEvent e) {}
+            public void focusGained(FocusEvent e) {
+            }
 
             @Override
             public void focusLost(FocusEvent e) {
                 String text = emailField.getText();
-                if(!text.matches("\\w+@[a-z0-9]{1,15}\\.[a-z]{2,5}")) {
+                if (!text.matches("\\w+@[a-z0-9]{1,15}\\.[a-z]{2,5}")) {
                     warningEmail.setVisible(true);
                     addButton.setEnabled(false);
                     saveButton.setEnabled(false);
-                }
-                else {
+                } else {
                     warningEmail.setVisible(false);
-                    if ( areAnyWarnings() ) return;
+                    if (areAnyWarnings()) return;
                     addButton.setEnabled(true);
                     saveButton.setEnabled(true);
                 }
@@ -392,19 +402,19 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
         });
         addressField.addFocusListener(new FocusListener() {
             @Override
-            public void focusGained(FocusEvent e) {}
+            public void focusGained(FocusEvent e) {
+            }
 
             @Override
             public void focusLost(FocusEvent e) {
                 String text = addressField.getText();
-                if(!text.matches("[\\w \\-,.]+") ) {                      //TODO
+                if (!text.matches("[\\w \\-,.]+")) {                      //TODO
                     warningAddress.setVisible(true);
                     addButton.setEnabled(false);
                     saveButton.setEnabled(false);
-                }
-                else {
+                } else {
                     warningAddress.setVisible(false);
-                    if ( areAnyWarnings() ) return;
+                    if (areAnyWarnings()) return;
                     addButton.setEnabled(true);
                     saveButton.setEnabled(true);
                 }
@@ -412,19 +422,19 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
         });
         telNumberField.addFocusListener(new FocusListener() {
             @Override
-            public void focusGained(FocusEvent e) {}
+            public void focusGained(FocusEvent e) {
+            }
 
             @Override
             public void focusLost(FocusEvent e) {
                 String text = telNumberField.getText();
-                if(!text.matches("[0-9]{9}")) {
+                if (!text.matches("[0-9]{9}")) {
                     warningTelNumber.setVisible(true);
                     addButton.setEnabled(false);
                     saveButton.setEnabled(false);
-                }
-                else {
+                } else {
                     warningTelNumber.setVisible(false);
-                    if ( areAnyWarnings() ) return;
+                    if (areAnyWarnings()) return;
                     addButton.setEnabled(true);
                     saveButton.setEnabled(true);
                 }
@@ -432,19 +442,19 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
         });
         nameField.addFocusListener(new FocusListener() {
             @Override
-            public void focusGained(FocusEvent e) {}
+            public void focusGained(FocusEvent e) {
+            }
 
             @Override
             public void focusLost(FocusEvent e) {
                 String text = nameField.getText();
-                if(!text.matches("[a-zA-Z]{1,30} [a-zA-Z ]{1,30}")) {
+                if (!text.matches("[a-zA-Z]{1,30} [a-zA-Z ]{1,30}")) {
                     warningName.setVisible(true);
                     addButton.setEnabled(false);
                     saveButton.setEnabled(false);
-                }
-                else {
+                } else {
                     warningName.setVisible(false);
-                    if ( areAnyWarnings() ) return;
+                    if (areAnyWarnings()) return;
                     addButton.setEnabled(true);
                     saveButton.setEnabled(true);
                 }
@@ -462,7 +472,7 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
     public void saveToFileListener() {
         saveToFileItem.addActionListener(e -> {
             fileFilter = new FileNameExtensionFilter("SER file", "ser");
-            fileChooser = new JFileChooser(userhome +"/IdeaProjects/JavaLab5/data");
+            fileChooser = new JFileChooser(userhome + "/IdeaProjects/JavaLab5/data");
             fileChooser.addChoosableFileFilter(fileFilter);
             int returnVal = fileChooser.showSaveDialog(this);
 
@@ -478,7 +488,7 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
     public void saveSelectedToFileListener() {
         saveSelectedToFileItem.addActionListener(e -> {
             fileFilter = new FileNameExtensionFilter("SER file", "ser");
-            fileChooser = new JFileChooser(userhome +"/IdeaProjects/JavaLab5/data");
+            fileChooser = new JFileChooser(userhome + "/IdeaProjects/JavaLab5/data");
             fileChooser.addChoosableFileFilter(fileFilter);
             int returnVal = fileChooser.showSaveDialog(this);
 
@@ -494,7 +504,7 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
     public void loadFromFileListener() {
         loadFromFileItem.addActionListener(e -> {
             fileFilter = new FileNameExtensionFilter("SER file", "ser");
-            fileChooser = new JFileChooser(userhome +"/IdeaProjects/JavaLab5/data");
+            fileChooser = new JFileChooser(userhome + "/IdeaProjects/JavaLab5/data");
             fileChooser.addChoosableFileFilter(fileFilter);
             int returnVal = fileChooser.showOpenDialog(this);
 
@@ -510,7 +520,7 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
     public void exportToTxtListener() {
         exportToTxtItem.addActionListener(e -> {
             fileFilter = new FileNameExtensionFilter("TXT file", "txt");
-            fileChooser = new JFileChooser(userhome +"/IdeaProjects/JavaLab5/data");
+            fileChooser = new JFileChooser(userhome + "/IdeaProjects/JavaLab5/data");
             fileChooser.addChoosableFileFilter(fileFilter);
             int returnVal = fileChooser.showSaveDialog(this);
 
@@ -526,7 +536,7 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
     public void exportSelectedToTxtListener() {
         exportSelectedToTxtItem.addActionListener(e -> {
             fileFilter = new FileNameExtensionFilter("TXT file", "txt");
-            fileChooser = new JFileChooser(userhome +"/IdeaProjects/JavaLab5/data");
+            fileChooser = new JFileChooser(userhome + "/IdeaProjects/JavaLab5/data");
             fileChooser.addChoosableFileFilter(fileFilter);
             int returnVal = fileChooser.showSaveDialog(this);
 
@@ -542,7 +552,7 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
     public void importFromTxtListener() {
         importFromTxtItem.addActionListener(e -> {
             fileFilter = new FileNameExtensionFilter("TXT file", "txt");
-            fileChooser = new JFileChooser(userhome +"/IdeaProjects/JavaLab5/data");
+            fileChooser = new JFileChooser(userhome + "/IdeaProjects/JavaLab5/data");
             fileChooser.addChoosableFileFilter(fileFilter);
             int returnVal = fileChooser.showOpenDialog(this);
 
@@ -560,15 +570,14 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
         filterList.addListSelectionListener(e -> {
             setWarningsHidden();
             Contact contact;
-            if ( isTempListDisplayed == true ) {
+            if (isTempListDisplayed == true) {
                 //contact = contactList.getAt(indexInContactList.get(filterList.getSelectedIndex()));
                 try {
                     contact = tempContactList.getAt(filterList.getSelectedIndex());
                     displayContact(contact);
+                } catch (Exception a) {
                 }
-                catch(Exception a) {}
-            }
-            else {
+            } else {
                 contact = contactList.getAt(filterList.getSelectedIndex());
                 displayContact(contact);
             }
@@ -595,26 +604,25 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
     public void newFilter() {
         //isTempListDisplayed = false;
 
-        if(filterField.getText().length()>0) {
+        if (filterField.getText().length() > 0) {
             tempContactList.cleanList();
             indexInContactList.clear();
             isTempListDisplayed = true;
             String nameSubstring;
             int filterFieldLength;
-            for(int i = 0; i < contactList.getSize();i++) {
+            for (int i = 0; i < contactList.getSize(); i++) {
                 filterFieldLength = filterField.getText().length();
-                if ( filterFieldLength > contactList.getAt(i).getName().length())
+                if (filterFieldLength > contactList.getAt(i).getName().length())
                     continue;
                 nameSubstring = contactList.getAt(i).getName().substring(0, filterFieldLength);
                 if (nameSubstring.equals(filterField.getText())) {
-                        tempContactList.add(contactList.getAt(i));
-                        indexInContactList.add(i);
+                    tempContactList.add(contactList.getAt(i));
+                    indexInContactList.add(i);
                 }
             }
             filterList.updateUI();
             filterList.setModel(tempContactList);
-        }
-        else {
+        } else {
             indexInContactList.clear();
             filterList.setModel(contactList);
             isTempListDisplayed = false;
@@ -649,14 +657,13 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
     }
 
     public void updateContact() {
-        if ( filterList.getSelectedIndex() == -1 )
+        if (filterList.getSelectedIndex() == -1)
             return;
         Contact contact;
 
-        if ( isTempListDisplayed == true ) {
+        if (isTempListDisplayed == true) {
             contact = contactList.getAt(indexInContactList.get(filterList.getSelectedIndex()));
-        }
-        else {
+        } else {
             contact = contactList.getAt(filterList.getSelectedIndex());
         }
 
@@ -667,27 +674,26 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
         contact.setAddress(addressField.getText());
         contact.setEmail(emailField.getText());
 
-        if ( male.isSelected() )
+        if (male.isSelected())
             contact.setSex(Sex.MALE);
         else
             contact.setSex(Sex.FEMALE);
 
         contact.setTitle((Title) titleComboBox.getSelectedItem());
 
-        if(familyBox.isSelected())
+        if (familyBox.isSelected())
             newCategories.add(Category.FAMILY);
-        if(friendsBox.isSelected())
+        if (friendsBox.isSelected())
             newCategories.add(Category.FRIENDS);
-        if(workBox.isSelected())
+        if (workBox.isSelected())
             newCategories.add(Category.WORK);
 
         contact.setCategory(newCategories);
 
-        if ( isTempListDisplayed == true ) {
+        if (isTempListDisplayed == true) {
             contactList.set(indexInContactList.get(filterList.getSelectedIndex()), contact);
             tempContactList.set((filterList.getSelectedIndex()), contact);
-        }
-        else {
+        } else {
             contactList.set(filterList.getSelectedIndex(), contact);
         }
     }
@@ -701,22 +707,22 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
         contact.setAddress(addressField.getText());
         contact.setEmail(emailField.getText());
 
-        if ( male.isSelected() )
+        if (male.isSelected())
             contact.setSex(Sex.MALE);
-        else if ( female.isSelected() )
+        else if (female.isSelected())
             contact.setSex(Sex.FEMALE);
         else
             warningSex.setVisible(true);
 
         contact.setTitle((Title) titleComboBox.getSelectedItem());
 
-        if(familyBox.isSelected()) {
+        if (familyBox.isSelected()) {
             categories.add(Category.FAMILY);
         }
-        if(friendsBox.isSelected()) {
+        if (friendsBox.isSelected()) {
             categories.add(Category.FRIENDS);
         }
-        if(workBox.isSelected()) {
+        if (workBox.isSelected()) {
             categories.add(Category.WORK);
         }
 
@@ -731,20 +737,20 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
         emailField.setText(contact.getEmail());
         telNumberField.setText(contact.getTelNumber());
 
-        if ( contact.categoryContains(Category.FAMILY) )
+        if (contact.categoryContains(Category.FAMILY))
             familyBox.setSelected(true);
         else
             familyBox.setSelected(false);
-        if ( contact.categoryContains(Category.FRIENDS) )
+        if (contact.categoryContains(Category.FRIENDS))
             friendsBox.setSelected(true);
         else
             friendsBox.setSelected(false);
-        if ( contact.categoryContains(Category.WORK) )
+        if (contact.categoryContains(Category.WORK))
             workBox.setSelected(true);
         else
             workBox.setSelected(false);
 
-        if ( contact.getSex() == Sex.FEMALE )
+        if (contact.getSex() == Sex.FEMALE)
             female.setSelected(true);
         else
             male.setSelected(true);
@@ -753,7 +759,7 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
     }
 
     public void clearFields() {
-        for(int i = 0 ; i < fields.length; i++)
+        for (int i = 0; i < fields.length; i++)
             fields[i].setText("");
         familyBox.setSelected(false);
         friendsBox.setSelected(false);
@@ -761,7 +767,7 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
         female.setSelected(true);
     }
 
-    public void setWarningsHidden () {
+    public void setWarningsHidden() {
         warningName.setVisible(false);
         warningTelNumber.setVisible(false);
         warningAddress.setVisible(false);
@@ -771,26 +777,23 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
         warningCategory.setVisible(false);
     }
 
-    public boolean areAnyWarnings () {
-        if ( warningName.isVisible() ) return true;
-        else if ( warningTelNumber.isVisible() ) return true;
-        else if ( warningAddress.isVisible() ) return true;
-        else if ( warningEmail.isVisible() ) return true;
-        else if ( warningSex.isVisible() ) return true;
-        else if ( warningTitle.isVisible() ) return true;
-        else if ( warningCategory.isVisible() ) return true;
+    public boolean areAnyWarnings() {
+        if (warningName.isVisible()) return true;
+        else if (warningTelNumber.isVisible()) return true;
+        else if (warningAddress.isVisible()) return true;
+        else if (warningEmail.isVisible()) return true;
+        else if (warningSex.isVisible()) return true;
+        else if (warningTitle.isVisible()) return true;
+        else if (warningCategory.isVisible()) return true;
         else return false;
     }
 
     public void deleteFromList() {
-        if( contactList.getSize() == 0 )
-        {
+        if (contactList.getSize() == 0) {
             JOptionPane.showMessageDialog(null, "Lista jest pusta");
-        }
-        else
-        {
-            int confirmRemoving =  JOptionPane.showConfirmDialog(null, "Czy na pewno usunąć wpis?", "Pytanie", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if ( confirmRemoving == 0 ) {
+        } else {
+            int confirmRemoving = JOptionPane.showConfirmDialog(null, "Czy na pewno usunąć wpis?", "Pytanie", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (confirmRemoving == 0) {
                 clearFields();
                 contactList.remove((filterList.getSelectedIndex()));
             }
@@ -798,22 +801,26 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 
     @Override
-    public void keyPressed(KeyEvent e) {}
+    public void keyPressed(KeyEvent e) {
+    }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if ( e.getKeyCode() == 127 ) {
+        if (e.getKeyCode() == 127) {
             setWarningsHidden();
             deleteFromList();
         }
     }
 
     @Override
-    public void focusGained(FocusEvent e) {}
+    public void focusGained(FocusEvent e) {
+    }
 
     @Override
-    public void focusLost(FocusEvent e) {}
+    public void focusLost(FocusEvent e) {
+    }
 }

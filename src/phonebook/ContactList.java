@@ -1,3 +1,5 @@
+package phonebook;
+
 import javax.swing.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -28,21 +30,21 @@ public class ContactList extends AbstractListModel implements Serializable {
         return null;
     }
 
-    public void add (Contact c) {
+    public void add(Contact c) {
         contactList.add(c);
-        fireContentsChanged(this,0,getSize());
+        fireContentsChanged(this, 0, getSize());
     }
 
-    public void set (int index, Contact c) {
+    public void set(int index, Contact c) {
         contactList.set(index, c);
-        fireContentsChanged(this,0,getSize());
+        fireContentsChanged(this, 0, getSize());
     }
 
     public void remove(int index) {
         contactList.remove(index);
-        fireContentsChanged(this,0,getSize());
+        fireContentsChanged(this, 0, getSize());
     }
-    
+
     public void cleanList() {
         contactList.clear();
     }
