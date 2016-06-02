@@ -800,6 +800,10 @@ public class PhoneBook extends JFrame implements FocusListener, KeyListener {
         }
     }
 
+    public ContactList getContactList() {
+        return contactList;
+    }
+
     @Override
     public void keyTyped(KeyEvent e) {
     }

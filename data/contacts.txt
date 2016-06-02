@@ -5,3 +5,4 @@ Walery Krakowski	465739812	ul. Krzywa 35, Krakow	walerek1234@op.pl	MALE	dr	WORK
 Kuba Baranowicz	847264883	Tychy	baran1995@onet.pl	MALE	brak	FRIENDS
 Joanna Szel	847882883	Krakow	szeljoanna@timer.pl	FEMALE	mgr inż.	WORK
 Hania Lato	758337482	ul. Dubois 24, 64-375 Lodz	hanna@logys.org	FEMALE	dr	FAMILY	FRIENDS
+Katarzyna Nowak	746352764	Rrzeszow	kasia@jsoft.pl	FEMALE	mgr	WORK

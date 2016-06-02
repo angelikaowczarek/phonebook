@@ -27,8 +27,8 @@ public class Contact implements Serializable {
 
     public Contact() {
         this.name = "";
-        this.telNumber = "";
         this.address = "";
+        this.telNumber = "";
         this.email = "";
         this.sex = null;
         this.title = Title.BRAK;

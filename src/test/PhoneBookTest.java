@@ -1,9 +1,12 @@
 package test;
 
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import phonebook.ContactList;
 import phonebook.PhoneBook;
+import static org.assertj.core.api.Assertions.assertThat;  // main one
+import java.io.File;
+import static junit.framework.Assert.*;
 
 public class PhoneBookTest {
     private PhoneBook pb;
@@ -18,7 +21,7 @@ public class PhoneBookTest {
         int returningValue =
                 pb.checkHeaders(
                         "name\ttelNumber\taddress\temail\tsex\ttitle\tcategory");
-        Assert.assertEquals(1, returningValue);
+        assertEquals(1, returningValue);
     }
 
     @Test
@@ -26,7 +29,7 @@ public class PhoneBookTest {
         int returningValue =
                 pb.checkHeaders(
                         "incorrect header");
-        Assert.assertEquals(-1, returningValue);
+        assertEquals(-1, returningValue);
     }
 
     @Test
@@ -38,6 +41,33 @@ public class PhoneBookTest {
         boolean areAnyWarnings = pb.areAnyWarnings();
 
         // then
-        Assert.assertEquals(false, areAnyWarnings);
+        assertFalse(areAnyWarnings);
     }
+
+    @Test
+    public void checkIfImportGivesWhatWasExportedBefore() throws Exception {
+        // given
+        ContactList tempContactList = pb.getContactList();
+        pb.exportToTxt(new File("./test.txt"));
+
+        // when
+        pb.importFromTxt(new File("./test.txt"));
+
+        // then
+        assertThat(pb.getContactList()).isSameAs(tempContactList);
+    }
+
+    @Test
+    public void checkIfImportGivesWhatWasExportedSelectivelyBefore() throws Exception {
+        // given
+        ContactList tempContactList = pb.getContactList();
+        pb.exportSelectedToTxt(new File("./test.txt"));
+
+        // when
+        pb.importFromTxt(new File("./test.txt"));
+
+        // then
+        assertThat(pb.getContactList()).isSameAs(tempContactList);
+    }
+
 }
